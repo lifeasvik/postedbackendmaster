@@ -8,7 +8,7 @@ const UsersService = {
     return db("posted_users")
       .where({ user_name })
       .first()
-      .then(user => !!user);
+      .then((user) => !!user);
   },
   insertUser(db, newUser) {
     return db
@@ -38,12 +38,10 @@ const UsersService = {
   serializeUser(user) {
     return {
       id: user.id,
-      full_name: xss(user.full_name),
       user_name: xss(user.user_name),
-      nickname: xss(user.nick_name),
-      date_created: new Date(user.date_created)
+      date_created: new Date(user.date_created),
     };
-  }
+  },
 };
 
 module.exports = UsersService;

@@ -24,6 +24,10 @@ app.use("/api/comments", commentsRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 
+app.get("/", (req, res) => {
+  res.send("Hello, world!");
+});
+
 app.use(function errorHandler(error, req, res, next) {
   let response;
   if (NODE_ENV === "production") {
@@ -36,7 +40,3 @@ app.use(function errorHandler(error, req, res, next) {
 });
 
 module.exports = app;
-
-// app.get("/", (req, res) => {
-//   res.send("Hello, world!");
-// });
