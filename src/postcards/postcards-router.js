@@ -1,16 +1,25 @@
 const express = require("express");
 const PostcardsService = require("./postcards-service");
 const { requireAuth } = require("../middleware/jwt-auth");
+const jsonBodyParser = express.json();
 
 const postcardsRouter = express.Router();
 
-postcardsRouter.route("/").get((req, res, next) => {
-  PostcardsService.getAllPostcards(req.app.get("db"))
-    .then(postcards => {
-      res.json(postcards.map(PostcardsService.serializePostcard));
-    })
-    .catch(next);
-});
+postcardsRouter
+  .route("/")
+  .get((req, res, next) => {
+    PostcardsService.getAllPostcards(req.app.get("db"))
+      .then((postcards) => {
+        res.json(postcards.map(PostcardsService.serializePostcard));
+      })
+      .catch(next);
+  })
+  .post(requireAuth, jsonBodyParser, (req, res, next) => {
+    PostcardsService.insertPostcard(req.app.get("db"), req.body).then((data) =>
+      res.json(PostcardsService.serializePostcard(data))
+    );
+    res.json(200);
+  });
 
 postcardsRouter
   .route("/:postcard_id")
@@ -29,7 +38,7 @@ postcardsRouter
       req.app.get("db"),
       req.params.postcard_id
     )
-      .then(comments => {
+      .then((comments) => {
         res.json(comments.map(PostcardsService.serializePostcardComment));
       })
       .catch(next);
@@ -45,7 +54,7 @@ async function checkPostcardExists(req, res, next) {
 
     if (!postcard)
       return res.status(404).json({
-        error: `Postcard doesn't exist`
+        error: `Postcard doesn't exist`,
       });
 
     res.postcard = postcard;
