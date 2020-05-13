@@ -12,7 +12,7 @@ const app = express();
 
 app.use(
   morgan(NODE_ENV === "production" ? "tiny" : "common", {
-    skip: () => NODE_ENV === "test"
+    skip: () => NODE_ENV === "test",
   })
 );
 
@@ -33,9 +33,9 @@ app.use(function errorHandler(error, req, res, next) {
   if (NODE_ENV === "production") {
     response = { error: "Server error" };
   } else {
-    console.error(error);
     response = { error: error.message, object: error };
   }
+  console.error(error);
   res.status(500).json(response);
 });
 
