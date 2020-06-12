@@ -1,26 +1,52 @@
-# Express Boilerplate!
+# Posted
 
-This is a boilerplate project used for starting new projects!
+An online postcard generator that allows users to create postcards using a URL link and text of their choice.
 
-## Set up
+## Recommended Usage
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+For testing purposes, I recommend you experience this web app with the following login credentials -
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+- Username: Demo1
+- Password: Password123!
 
-## Scripts
+## Screenshots
 
-Start the application `npm start`
+<p align="center">
+  <img width="223" height="395.5" src="assets\landingpage.PNG">
+  <img width="223" height="395.5" src="assets\signuppage.PNG">
+  <img width="223" height="395.5" src="assets\dashboard.PNG">
+</p>
 
-Start nodemon for the application `npm run dev`
+## API Documentation
 
-Run the tests `npm test`
+API endpoints
 
-## Deploying
+- POST to '/api/auth/login' authenticate and login returning user
+- POST to '/api/auth/refresh' refresh Auth token
+- POST to '/api/users' posts new user info into database
+- GET to '/api/users' get all users from database
+- GET to '/api/user/:id' get all stories by id
+- GET to '/api/postcard' get all posts from database
+- POST to '/api/postcard' posts a post to the database
+- GET to '/api/postcard/:id' get all posts by id
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+## Built With
+
+- HTML5
+- CSS3
+- Javascript
+- jQuery
+- React
+- PostgreSQL
+- Express
+- Node.js
+- JWT
+- Heroku/Zeit
+
+## Demo
+
+- [Live Demo](https://react-posted.now.sh/)
+
+## Author
+
+- [**Vik Birdi**](https://github.com/lifeasvik) - Front-End development / Back-End development / Styling
