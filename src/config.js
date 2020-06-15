@@ -5,8 +5,3 @@ module.exports = {
   JWT_SECRET: process.env.JWT_SECRET || "bananas",
   JWT_EXPIRY: process.env.JWT_EXPIRY || 3000000,
 };
-// TODO
-// heroku create
-// add the db
-// npm run migrate:production
-// go to dashboard.herokuapp.com -> setup JWT_SECRET and JWT_EXPIRY as config vars

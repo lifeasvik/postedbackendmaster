@@ -19,6 +19,8 @@ app.use(
 app.use(cors());
 app.use(helmet());
 
+//Backend Endpoints
+
 app.use("/api/postcards", postcardsRouter);
 app.use("/api/comments", commentsRouter);
 app.use("/api/auth", authRouter);
@@ -27,6 +29,8 @@ app.use("/api/users", usersRouter);
 app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
+
+//Function to handle server error response
 
 app.use(function errorHandler(error, req, res, next) {
   let response;

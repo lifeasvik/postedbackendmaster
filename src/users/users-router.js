@@ -5,6 +5,8 @@ const UsersService = require("./users-service");
 const usersRouter = express.Router();
 const jsonBodyParser = express.json();
 
+//User router ensures password is hashed and there username is not taken
+
 usersRouter.post("/", jsonBodyParser, (req, res, next) => {
   const { password, user_name } = req.body;
 
