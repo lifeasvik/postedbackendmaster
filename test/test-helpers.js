@@ -32,6 +32,11 @@ function makeUsersArray() {
     },
   ];
 }
+
+function createTable(db) {
+  return db.into("posted_users").insert(makeUsersArray()).then();
+}
+
 function cleanTables(db) {
   return db.transaction((trx) =>
     trx
@@ -75,4 +80,5 @@ module.exports = {
   cleanTables,
   makeAuthHeader,
   seedUsers,
+  createTable,
 };
