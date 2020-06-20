@@ -1,0 +1,45 @@
+    Postcard code removed
+    
+    // it(`responds 400 'invalid postcard_text or image_url' when bad postcard_text`, () => {
+    //   const userInvalidPost = { postcard_text: "user-not", image_url: "existy" };
+    //   return supertest(app)
+    //     .post("/api/auth/login")
+    //     .send(userInvalidPost)
+    //     .expect(400, { error: `Incorrect postcard_text or image_url` });
+    // });
+    // it(`responds 400 'invalid postcard_text or image_url' when bad image_url`, () => {
+    //   const userInvalidPass = {
+    //     postcard_text: testedPost.postcard_text,
+    //     image_url: "incorrect",
+    //   };
+    //   return supertest(app)
+    //     .post("/api/login")
+    //     .send(userInvalidPass)
+    //     .expect(400, { error: `Incorrect postcard_text or image_url` });
+    // });
+    // it(`responds 200 and JWT auth token using secret when valid credentials`, () => {
+    //   const userValidCreds = {
+    //     postcard_text: testedPost.postcard_text,
+    //     image_url: testedPost.image_url,
+    //   };
+    //   const expectedToken = jwt.sign(
+    //     { user_id: testedPost.id },
+    //     process.env.JWT_SECRET,
+    //     {
+    //       subject: testedPost.postcard_text,
+    //       // expiresIn: process.env.JWT_EXPIRY || '2d',
+    //       algorithm: "HS256",
+    //     }
+    //   );
+  //     return supertest(app)
+  //       .post("/api/login")
+  //       .send(userValidCreds)
+  //       .expect(200, {
+  //         authToken: expectedToken,
+  //         postcard_text: testedPost.postcard_text,
+  //       });
+  //   });
+  // });
+  // describe(`POST /api/refresh`, () => {
+  //   beforeEach("insert users", () => helpers.seedUsers(db, testPosts));
+  // });
