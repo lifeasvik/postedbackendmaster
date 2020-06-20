@@ -16,10 +16,17 @@ describe("Auth Endpoints", function () {
     app.set("db", db);
   });
   after("disconnect from db", () => db.destroy());
+<<<<<<< HEAD
   beforeEach("insert users", () => helpers.seedUsers(db, testUsers));
   afterEach("cleanup", () => helpers.cleanTables(db));
   describe(`POST /api/auth/login`, () => {
     // beforeEach("insert users", () => helpers.createTable(db, testUsers));
+=======
+  beforeEach("cleanup", () => helpers.seedUsers(db));
+  afterEach("cleanup", () => helpers.cleanTables(db));
+  describe(`POST /api/login`, () => {
+    // beforeEach("insert users", () => helpers.seedUsers(db, testUsers));
+>>>>>>> 2262f9bf7056a32f2808f75c7723d3e1d4dfe57a
     const requiredFields = ["user_name", "password"];
     requiredFields.forEach((field) => {
       const loginAttemptBody = {

@@ -32,6 +32,7 @@ function makeUsersArray() {
   ];
 }
 
+<<<<<<< HEAD
 // create posts for test
 function makePostArray() {
   return [
@@ -53,6 +54,12 @@ function makePostArray() {
 }
 
 //cleanup tables after test
+=======
+function createTable(db) {
+  return db.into("posted_users").insert(makeUsersArray()).then();
+}
+
+>>>>>>> 2262f9bf7056a32f2808f75c7723d3e1d4dfe57a
 function cleanTables(db) {
   return db.transaction((trx) =>
     trx
@@ -115,6 +122,10 @@ module.exports = {
   cleanTables,
   makeAuthHeader,
   seedUsers,
+<<<<<<< HEAD
   seedPosts,
   makePostArray,
+=======
+  createTable,
+>>>>>>> 2262f9bf7056a32f2808f75c7723d3e1d4dfe57a
 };
