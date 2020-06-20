@@ -4,7 +4,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const { NODE_ENV } = require("./config");
 const postcardsRouter = require("./postcards/postcards-router");
-const commentsRouter = require("./comments/comments-router");
+// const commentsRouter = require("./comments/comments-router");
 const authRouter = require("./auth/auth-router");
 const usersRouter = require("./users/users-router");
 

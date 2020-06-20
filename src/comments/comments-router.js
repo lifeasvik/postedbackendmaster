@@ -15,13 +15,13 @@ commentsRouter
     for (const [key, value] of Object.entries(newComment))
       if (value == null)
         return res.status(400).json({
-          error: `Missing '${key}' in request body`
+          error: `Missing '${key}' in request body`,
         });
 
     newComment.user_id = req.user.id;
 
     CommentsService.insertComment(req.app.get("db"), newComment)
-      .then(comment => {
+      .then((comment) => {
         res
           .status(201)
           .location(path.posix.join(req.originalUrl, `/${comment.id}`))

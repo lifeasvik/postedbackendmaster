@@ -2,6 +2,7 @@ const knex = require("knex");
 const jwt = require("jsonwebtoken");
 const app = require("../src/app");
 const helpers = require("./test-helpers");
+const config = require("../src/config");
 
 describe("Auth Endpoints", function () {
   let db;
@@ -15,10 +16,10 @@ describe("Auth Endpoints", function () {
     app.set("db", db);
   });
   after("disconnect from db", () => db.destroy());
-  before("cleanup", () => helpers.cleanTables(db));
+  beforeEach("insert users", () => helpers.seedUsers(db, testUsers));
   afterEach("cleanup", () => helpers.cleanTables(db));
-  describe(`POST /api/login`, () => {
-    beforeEach("insert users", () => helpers.seedUsers(db, testUsers));
+  describe(`POST /api/auth/login`, () => {
+    // beforeEach("insert users", () => helpers.createTable(db, testUsers));
     const requiredFields = ["user_name", "password"];
     requiredFields.forEach((field) => {
       const loginAttemptBody = {
@@ -28,7 +29,7 @@ describe("Auth Endpoints", function () {
       it(`responds with 400 required error when '${field}' is missing`, () => {
         delete loginAttemptBody[field];
         return supertest(app)
-          .post("/api/login")
+          .post("/api/auth/login")
           .send(loginAttemptBody)
           .expect(400, {
             error: `Missing '${field}' in request body`,
@@ -48,7 +49,7 @@ describe("Auth Endpoints", function () {
         password: "incorrect",
       };
       return supertest(app)
-        .post("/api/login")
+        .post("/api/auth/login")
         .send(userInvalidPass)
         .expect(400, { error: `Incorrect user_name or password` });
     });
@@ -57,25 +58,48 @@ describe("Auth Endpoints", function () {
         user_name: testUser.user_name,
         password: testUser.password,
       };
+      /*
+       return jwt.sign(payload, config.JWT_SECRET, {
+      subject,
+      expiresIn: config.JWT_EXPIRY,
+      algorithm: "HS256",
+    });
+    */
       const expectedToken = jwt.sign(
         { user_id: testUser.id },
-        process.env.JWT_SECRET,
+        config.JWT_SECRET,
         {
           subject: testUser.user_name,
-          // expiresIn: process.env.JWT_EXPIRY || '2d',
+          expiresIn: config.JWT_EXPIRY,
           algorithm: "HS256",
         }
       );
       return supertest(app)
-        .post("/api/login")
+        .post("/api/auth/login")
         .send(userValidCreds)
         .expect(200, {
           authToken: expectedToken,
-          user_name: testUser.user_name,
         });
     });
   });
-  describe(`POST /api/refresh`, () => {
+  describe(`POST /api/auth/refresh`, () => {
     beforeEach("insert users", () => helpers.seedUsers(db, testUsers));
+  });
+
+  // Auth Endpoint Happy Path
+  context(`Happy path`, () => {
+    it(`responds 201, serialized user, storing bcrypted password`, () => {
+      const newUser = {
+        user_name: testUsers[0].user_name,
+        password: testUsers[0].password,
+      };
+      return supertest(app)
+        .post("/api/auth/login")
+        .send(newUser)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body).to.have.property("authToken");
+        });
+    });
   });
 });

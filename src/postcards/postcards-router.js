@@ -15,10 +15,14 @@ postcardsRouter
       .catch(next);
   })
   .post(requireAuth, jsonBodyParser, (req, res, next) => {
-    PostcardsService.insertPostcard(req.app.get("db"), req.body).then((data) =>
-      res.json(PostcardsService.serializePostcard(data))
-    );
-    res.json(200);
+    ["title", "content"].forEach((field) => {
+      if (!req.body.hasOwnProperty(field)) {
+        res.status(400).json({ error: `Missing '${field}' in request body` });
+      }
+    });
+    PostcardsService.insertPostcard(req.app.get("db"), req.body)
+      .then((data) => res.json(PostcardsService.serializePostcard(data)))
+      .catch(next);
   });
 
 postcardsRouter
@@ -29,20 +33,22 @@ postcardsRouter
     res.json(PostcardsService.serializePostcard(res.postcard));
   });
 
-postcardsRouter
-  .route("/:postcard_id/comments/")
-  .all(requireAuth)
-  .all(checkPostcardExists)
-  .get((req, res, next) => {
-    PostcardsService.getCommentsForPostcard(
-      req.app.get("db"),
-      req.params.postcard_id
-    )
-      .then((comments) => {
-        res.json(comments.map(PostcardsService.serializePostcardComment));
-      })
-      .catch(next);
-  });
+//do i need this if i don'thave any comments?
+
+// postcardsRouter
+//   .route("/:postcard_id/comments/")
+//   .all(requireAuth)
+//   .all(checkPostcardExists)
+//   .get((req, res, next) => {
+//     PostcardsService.getCommentsForPostcard(
+//       req.app.get("db"),
+//       req.params.postcard_id
+//     )
+//       .then((comments) => {
+//         res.json(comments.map(PostcardsService.serializePostcardComment));
+//       })
+//       .catch(next);
+//   });
 
 /* async/await syntax for promises */
 async function checkPostcardExists(req, res, next) {
